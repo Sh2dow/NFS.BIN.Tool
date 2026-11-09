@@ -15,18 +15,20 @@ namespace NFS.Unpacker
             Console.WriteLine("(c) 2024 Ekey (h4x0r) / v{0}\n", Utils.iGetApplicationVersion());
             Console.ResetColor();
 
-            if (args.Length != 3)
+            if (args.Length < 3 || args.Length > 4)
             {
                 Console.ForegroundColor = ConsoleColor.White;
                 Console.WriteLine("[Usage]");
-                Console.WriteLine("    NFS.Unpacker <m_Format> <m_File> <m_Directory>\n");
+                Console.WriteLine("    NFS.Unpacker <m_Format> <m_File> <m_Directory> [m_Layout]\n");
                 Console.WriteLine("    m_Format - ZDIR format (for NFSHP2 PS2 set -true) other games -false");
                 Console.WriteLine("    m_File - Source of ZDIR.BIN index file");
-                Console.WriteLine("    m_Directory - Destination directory\n");
+                Console.WriteLine("    m_Directory - Destination directory");
+                Console.WriteLine("    m_Layout - Optional -flat for loading extracted files directly\n");
                 Console.ResetColor();
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine("[Examples]");
-                Console.WriteLine("    NFS.Unpacker /path/to/ZDIR.BIN /path/to/unpacked");
+                Console.WriteLine("    NFS.Unpacker -false /path/to/ZDIR.BIN /path/to/unpacked");
+                Console.WriteLine("    NFS.Unpacker -false /path/to/ZDIR.BIN /path/to/unpacked -flat");
                 Console.ResetColor();
                 return;
             }
@@ -34,6 +36,13 @@ namespace NFS.Unpacker
             String m_Format = args[0];
             String m_BinFile = args[1];
             String m_Output = Utils.iCheckArgumentsPath(args[2]);
+            Boolean bFlatLayout = args.Length == 4 && args[3] == "-flat";
+
+            if (args.Length == 4 && !bFlatLayout)
+            {
+                Utils.iSetError("[ERROR]: Unknown layout -> use \"-flat\" or omit it");
+                return;
+            }
 
             Boolean bOldZDirFormat = false;
             switch (m_Format)
@@ -55,7 +64,7 @@ namespace NFS.Unpacker
                 return;
             }
 
-            BinUnpack.iDoIt(m_BinFile, m_Output, bOldZDirFormat);
+            BinUnpack.iDoIt(m_BinFile, m_Output, bOldZDirFormat, bFlatLayout);
         }
     }
 }

@@ -11,7 +11,7 @@ namespace NFS.Unpacker
         private static List<BinEntry> m_EntryTable = new List<BinEntry>();
         private static List<String> m_BinList = new List<String>();
 
-        public static void iDoIt(String m_IndexFile, String m_DstFolder, Boolean bOldZDirFormat = false)
+        public static void iDoIt(String m_IndexFile, String m_DstFolder, Boolean bOldZDirFormat = false, Boolean bFlatLayout = false)
         {
             BinHashList.iLoadProject();
             using (FileStream TIndexStream = File.OpenRead(m_IndexFile))
@@ -115,6 +115,11 @@ namespace NFS.Unpacker
                 {
                     m_FullPath = m_DstFolder + Path.GetFileNameWithoutExtension(m_BinList[m_Entry.dwArchiveID]) + Path.DirectorySeparatorChar + m_FileName;
                     m_ArchiveFile = Path.GetDirectoryName(m_IndexFile) + Path.DirectorySeparatorChar + m_BinList[m_Entry.dwArchiveID];
+                }
+
+                if (bFlatLayout)
+                {
+                    m_FullPath = m_DstFolder + m_FileName;
                 }
 
                 Utils.iSetInfo("[UNPACKING]: " + m_FileName);

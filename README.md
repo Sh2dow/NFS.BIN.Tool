@@ -2,12 +2,16 @@
 Tool for extract ZZDATA archives from Need for Speed console games series
 
 ### Usage
-> NFS.Unpacker "**ZDIR_FORMAT**" "**ZDIR_FILE**" "**UNPACK_DIRECTORY**"
+> NFS.Unpacker "**ZDIR_FORMAT**" "**ZDIR_FILE**" "**UNPACK_DIRECTORY**" "[**LAYOUT**]"
 
 ### Examples
 > NFS.Unpacker "**-false**"  "**E:\Games\Need For Speed Carbon [GW5E69]\root\NFS\ZDIR.BIN**" "**E:\MOD\UNPACKED**"
 
 > NFS.Unpacker "**-true**"  "**E:\Games\SLUS-20362\NFSHP2\ZDIR.BIN**" "**E:\MOD\UNPACKED**"
+
+> NFS.Unpacker "**-false**"  "**D:\Games\NFS MW X360\NFS\ZDIR.BIN**" "**D:\Games\NFS MW X360 Extracted**" "**-flat**"
+
+By default, files are grouped by their source archive (`ZZDATA0`, `ZZDATA1`, etc.) for repacking. Use `**-flat**` to write paths such as `TRACKS\L2RA\MINI_MAP.BIN` directly under the destination, as required when speedbreaker loads extracted resources instead of the original `ZZDATA` archives.
 
 > [!important]
 > You need to replace all the archives and index file (ZDIR.BIN) after packing!
